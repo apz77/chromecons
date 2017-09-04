@@ -1,0 +1,3 @@
+// CMake configuration file
+#define VERSION @PROJECT_VERSION@
+#define DESCRIPTION @PROJECT_DESCRIPTION@
