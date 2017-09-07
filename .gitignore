@@ -5,4 +5,4 @@ release/vendors/boost/bin.v2/
 release/vendors/boost/bjam
 release/vendors/boost/bootstrap.log
 release/vendors/boost/libs/config/checks/architecture/bin/
-release/vendors/boost/project-config.jam
+release/vendors/boost/project-config.jam*

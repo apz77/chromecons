@@ -3,15 +3,29 @@ configure_file(
     "${PROJECT_BINARY_DIR}/include/config.h"
 )
 
+set(BOOST_DIR libs/boost)
+
 add_executable(chromecons src/main.cpp)
 
 include_directories(${PROJECT_BINARY_DIR}/include)
 include_directories(include)
+include_directories(${BOOST_DIR}/include)
 
 add_subdirectory(vendors)
 
-file(GLOB SOURCE_FILES "src/*.cpp" "src/*.c")
+file(GLOB_RECURSE SOURCE_FILES "src/*.cpp" "src/*.c" "include/*.h")
+file(GLOB BOOST_LIBS "${BOOST_DIR}/lib/*.a")
 
-set(SOURCES
-    ${SOURCE_FILES}
-)
+message("${BOOST_LIBS}")
+
+link_directories(${BOOST_DIR}/lib)
+target_link_libraries(chromecons sqlite3 pthread dl http-parser)
+target_link_libraries(chromecons ${BOOST_LIBS})
+
+target_sources(chromecons PUBLIC ${SOURCE_FILES})
+
+if(MSVC)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi")
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+endif()

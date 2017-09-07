@@ -1,5 +1,8 @@
 set(BOOST_LIB_DIR ../../libs/boost)
 
+add_subdirectory(sqlite)
+add_subdirectory(http-parser)
+
 message("${CMAKE_CURRENT_LIST_DIR}")
 
 if (WIN32)
