@@ -36,7 +36,6 @@ boost::asio::ip::tcp::endpoint Server::localEndpoint() {return _acceptor.local_e
 void Server::_start_accepting() {
     _acceptor.async_accept(_socket,
        [this](boost::system::error_code ec) {
-            std::cout<<"Accepted"<<std::endl;
             if (_acceptor.is_open() && !ec) {
                 auto newConnection = std::make_shared<Connection>(
                     std::move(_socket),

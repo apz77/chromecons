@@ -18,7 +18,8 @@ void Connection::start() {
                 if (result == Parser::OK) {
                     start();
                 } else {
-                    writeReply(_server.handleRequest(_parser.getRequest()));
+                    Reply reply = std::move(_server.handleRequest(_parser.getRequest()));
+                    writeReply(reply);
                 }
             } else {
                 _server.stopConnection(shared_from_this());
@@ -30,7 +31,7 @@ void Connection::start() {
 void Connection::writeReply(Reply reply) {
     _socket.async_write_some(
         reply.getBuffers(),
-        [this, &reply](boost::system::error_code ec, size_t) {
+        [this, reply](boost::system::error_code ec, size_t) {
             if (!ec) {
                 boost::system::error_code no_error;
                 _socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, no_error);

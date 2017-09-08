@@ -21,7 +21,7 @@ public:
 
     Parser();
     Result consume(const char*, const size_t length);
-    Request& getRequest() {return _request;};
+    inline Request& getRequest() {return _request;};
 
 protected:
     Request _request;

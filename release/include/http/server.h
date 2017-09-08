@@ -21,6 +21,7 @@ public:
     explicit Server(const std::string& address, const std::string& port, const std::unique_ptr<RequestHandler>);
 
     boost::asio::ip::tcp::endpoint localEndpoint();
+    boost::asio::io_service& getIOService() {return _io_service;};
 
     void run();
     void stop();
