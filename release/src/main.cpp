@@ -55,8 +55,16 @@ int main(int argc, char** argv) {
          return reply;
     });
 
-    router->addSemanticRoute(http::Method::GET, {"passwords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
+    router->addSemanticRoute(http::Method::OPTIONS, {"passwords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
          http::Reply reply = http::Reply::getStandardReply(http::Reply::OK);
+         reply.headers.emplace_back("Access-Control-Allow-Origin", "*");
+         return reply;
+    });
+
+    router->addSemanticRoute(http::Method::GET, {"passwords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
+         http::Reply reply = http::Reply::getStandardReply(http::Reply::OK, request.version);
+         reply.headers.emplace_back("Access-Control-Allow-Origin", "*");
+         reply.headers.emplace_back("Content-Type", "application/json");
          reply.content = toJson(passwordRetriever.begin(), passwordRetriever.end());
          return reply;
     });

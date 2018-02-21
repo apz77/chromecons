@@ -20,8 +20,8 @@ message("${BOOST_LIBS}")
 
 link_directories(${BOOST_DIR}/lib)
 
-set_target_properties(sqlite3 PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
-set_target_properties(http-parser PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+#set_target_properties(sqlite3 PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+#set_target_properties(http-parser PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
 
 target_link_libraries(chromecons sqlite3 pthread dl http-parser)
 target_link_libraries(chromecons ${BOOST_LIBS})
@@ -31,5 +31,5 @@ target_sources(chromecons PUBLIC ${SOURCE_FILES})
 if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi")
 else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os -m32")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
 endif()

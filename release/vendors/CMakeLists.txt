@@ -18,7 +18,6 @@ if (WIN32)
 
     execute_process(COMMAND b2 install
 			"link=static"
-			"address-model=32"
 			"--prefix=${BOOST_LIB_DIR}"
                   WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/boost"
 		  RESULT_VARIABLE bootstrap_result)
@@ -36,7 +35,6 @@ else()
 
     execute_process(COMMAND ./b2 install
 			"link=static"
-			"address-model=32"
 			WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/boost"
 			RESULT_VARIABLE bootstrap_result)
 endif()

@@ -25,7 +25,7 @@ public:
     };
 
     Reply();
-    Reply(StatusCode, std::string);
+    Reply(StatusCode, std::string, HttpVersion version = HttpVersion::V10);
 
     std::vector<boost::asio::const_buffer> getBuffers() const;
 
@@ -36,7 +36,11 @@ public:
 
     bool terminateServer;
 
-    static Reply getStandardReply(const StatusCode);
+    static Reply getStandardReply(const StatusCode, HttpVersion version = HttpVersion::V10);
+
+protected:
+    mutable std::string _status;
+    mutable std::string _content_length;
 };
 
 }

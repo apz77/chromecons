@@ -3,6 +3,7 @@
 #include "http/connection.h"
 #include "http/server.h"
 #include <iostream>
+#include <vector>
 
 namespace http {
 
@@ -19,6 +20,10 @@ void Connection::start() {
                     start();
                 } else {
                     Reply reply = std::move(_server.handleRequest(_parser.getRequest()));
+                    auto b = reply.getBuffers();
+                    std::vector<char> data(boost::asio::buffer_size(b));
+                    boost::asio::buffer_copy(boost::asio::buffer(data), b);
+                    std::cout<<std::string(data.data(), data.size())<<std::endl<<std::endl;
                     writeReply(reply);
                 }
             } else {
