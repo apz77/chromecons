@@ -1,5 +1,5 @@
 Import passwords from Chrome (Chromium) desktop.
-Works in lunix for now.
+Works under lunix for now.
 
 To build place all build files in ./build directory run:
 
