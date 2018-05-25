@@ -5,6 +5,7 @@
 #include <fstream>
 
 PasswordRetriever::PasswordRetriever(const std::string pathToFile): _pathToFile(pathToFile), _isLoaded(false) {
+    std::cout<<"Reading file:"<<_pathToFile<<std::endl;
     retrieveRecords();
 }
 

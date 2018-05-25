@@ -1,13 +1,21 @@
 #include "utils.h"
 #include <cstdio>
 #include <array>
+#include <algorithm>
+#include <fstream>
 
 const std::string getPathToFile() {
 #ifdef __linux__
     const std::vector<std::string> files = {
         std::string(std::getenv("HOME")) + std::string("/.config/google-chrome/Default/Login Data"),
         std::string(std::getenv("HOME")) + std::string("/.config/chromium/Default/Login Data")
-    }
+    };
+    const auto result = std::find_if(files.begin(), files.end(), [](std::string filename) -> bool {
+        const std::ifstream ifs(filename);
+        return ifs.good();
+    });
+
+    return result != files.end() ? *result : "";
 
 #else
     return "TODO: implement windows path";
