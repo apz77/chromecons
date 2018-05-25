@@ -18,21 +18,21 @@ int main(int argc, char** argv) {
 
     std::unique_ptr<Router> router(new Router());
 
-    router->addSemanticRoute(http::Method::GET, {"terminate"}, [](const http::Request& request) -> http::Reply {
+    router->addSemanticRoute(http::Method::GET_METHOD, {"terminate"}, [](const http::Request& request) -> http::Reply {
          http::Reply reply = http::Reply::getStandardReply(http::Reply::OK);
          reply.content = std::string("Thank you for using BastionPass.");
          reply.terminateServer = true;
          return reply;
     });
 
-    router->addSemanticRoute(http::Method::GET, {"blocked"}, [](const http::Request& request) -> http::Reply {
+    router->addSemanticRoute(http::Method::GET_METHOD, {"blocked"}, [](const http::Request& request) -> http::Reply {
          http::Reply reply = http::Reply::getStandardReply(http::Reply::OK);
          reply.content = generateStockContent("No passwords found", "Please, close Chrome or Chromium", "We cannot retrieve Chrome or Chromuim passwords while it's running. Please, close it and rerun the utility.");
          reply.terminateServer = true;
          return reply;
     });
 
-    router->addSemanticRoute(http::Method::GET, {"nopasswords"}, [](const http::Request& request) -> http::Reply {
+    router->addSemanticRoute(http::Method::GET_METHOD, {"nopasswords"}, [](const http::Request& request) -> http::Reply {
          http::Reply reply = http::Reply::getStandardReply(http::Reply::OK);
          reply.content = generateStockContent(
               "No password found",
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
          return reply;
     });
 
-    router->addSemanticRoute(http::Method::GET, {"removeyourself"}, [argc, argv](const http::Request& request) -> http::Reply {
+    router->addSemanticRoute(http::Method::GET_METHOD, {"removeyourself"}, [argc, argv](const http::Request& request) -> http::Reply {
          http::Reply reply = http::Reply::getStandardReply(http::Reply::OK);
          reply.content = generateStockContent(
               "Utility removed", "The utility has been removed from your PC.",
@@ -55,13 +55,13 @@ int main(int argc, char** argv) {
          return reply;
     });
 
-    router->addSemanticRoute(http::Method::OPTIONS, {"passwords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
+    router->addSemanticRoute(http::Method::OPTIONS_METHOD, {"passwords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
          http::Reply reply = http::Reply::getStandardReply(http::Reply::OK);
          reply.headers.emplace_back("Access-Control-Allow-Origin", "*");
          return reply;
     });
 
-    router->addSemanticRoute(http::Method::GET, {"passwords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
+    router->addSemanticRoute(http::Method::GET_METHOD, {"passwords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
          http::Reply reply = http::Reply::getStandardReply(http::Reply::OK, request.version);
          reply.headers.emplace_back("Access-Control-Allow-Origin", "*");
          reply.headers.emplace_back("Content-Type", "application/json");

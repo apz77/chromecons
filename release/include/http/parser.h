@@ -14,9 +14,9 @@ class Parser {
 public:
 
     enum Result {
-        OK = 0,     // Chunk has been successfully consumed, wait for more
-        DONE,   // Message parsing completed, may start form response
-        ERROR   // Ups, I'm woman in love...
+        OK_RESULT = 0,     // Chunk has been successfully consumed, wait for more
+        DONE_RESULT,   // Message parsing completed, may start form response
+        ERROR_RESULT   // Ups, I'm woman in love...
     };
 
     Parser();

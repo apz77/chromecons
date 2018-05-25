@@ -15,8 +15,8 @@ void Connection::start() {
         boost::asio::buffer(_buffer),
         [this](boost::system::error_code ec, std::size_t bytesReceived) {
             Parser::Result result;
-            if (!ec && (result = _parser.consume(_buffer.data(), bytesReceived)) != Parser::ERROR) {
-                if (result == Parser::OK) {
+            if (!ec && (result = _parser.consume(_buffer.data(), bytesReceived)) != Parser::ERROR_RESULT) {
+                if (result == Parser::OK_RESULT) {
                     start();
                 } else {
                     Reply reply = std::move(_server.handleRequest(_parser.getRequest()));

@@ -81,10 +81,10 @@ public:
         );
 
         return _processingComplete
-            ? Parser::DONE
+            ? Parser::DONE_RESULT
             : consumed == length
-                ? Parser::OK
-                : Parser::ERROR;
+                ? Parser::OK_RESULT
+                : Parser::ERROR_RESULT;
     }
 
     Request& _request;
