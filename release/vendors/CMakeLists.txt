@@ -33,7 +33,7 @@ else()
 	message(FATAL_ERROR "boost: Boost bootstrap failed ${bootstrap_result}")
     endif()
 
-    execute_process(COMMAND ./b2 install
+    execute_process(COMMAND ./b2 address-model=32 install
 			"link=static"
 			WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/boost"
 			RESULT_VARIABLE bootstrap_result)
