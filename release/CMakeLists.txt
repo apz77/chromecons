@@ -34,6 +34,8 @@ target_link_libraries(chromecons sqlite3 http-parser ${BOOST_LIBS})
 
 if (UNIX)
     target_link_libraries(chromecons pthread dl)
+else()
+    target_link_libraries(chromecons Shell32.lib)
 endif()
 
 target_sources(chromecons PUBLIC ${SOURCE_FILES})

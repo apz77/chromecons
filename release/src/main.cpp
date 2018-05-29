@@ -14,7 +14,12 @@
 
 int main(int argc, char** argv) {
     std::cout<<"BastionPass Chrome passwords extractor "<<VERSION<<std::endl;
+	std::cout << "File to open:" << getPathToFile() << std::endl;
     PasswordRetriever passwordRetriever(getPathToFile());
+
+	if (!passwordRetriever) {
+		std::cerr << "Unable to find chrome passwords :(" << std::endl;
+	}
 
     std::unique_ptr<Router> router(new Router());
 
