@@ -1,4 +1,4 @@
-set(BOOST_LIB_DIR ../../libs/boost)
+set(BOOST_LIB_DIR ./boost)
 
 add_subdirectory(sqlite)
 add_subdirectory(http-parser)
@@ -15,12 +15,6 @@ if (WIN32)
     if (bootstrap_result) 
 	message(FATAL_ERROR "boost: Boost bootstrap failed")
     endif()
-
-    execute_process(COMMAND b2 install
-			"link=static"
-			"--prefix=${BOOST_LIB_DIR}"
-                  WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/boost"
-		  RESULT_VARIABLE bootstrap_result)
 
 else()
     message(STATUS "Bootstrapping boost (Linux)")

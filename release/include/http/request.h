@@ -8,13 +8,13 @@
 namespace http {
 
 enum Method {
-    DELETE = 0,
-    GET,
-    HEAD,
-    POST,
-    PUT,
-    CONNECT,
-    OPTIONS,
+    DELETE_METHOD = 0,
+    GET_METHOD,
+    HEAD_METHOD,
+    POST_METHOD,
+    PUT_METHOD,
+    CONNECT_METHOD,
+    OPTIONS_METHOD,
 };
 
 enum HttpVersion {

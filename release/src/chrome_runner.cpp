@@ -5,11 +5,15 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 
+
 #ifdef __linux__
 #include <linux/limits.h>
 #include <unistd.h>
 #include <cerrno>
 #include <cstring>
+#else
+#include <Windows.h>
+#include <ShellAPI.h>
 #endif // __linux__
 
 #ifdef __linux__
@@ -32,19 +36,25 @@ bool checkLinuxCommandExists(const std::string name) {
 ChromeRunner::ChromeRunner(const std::string serverAddress): _serverAddress(serverAddress) {
     _chromePath = "";
 #ifdef __linux__
-    // Linux distributions chrome commiters are just crazy.
+    // Linux distributions chrome committers are just crazy when name it.
     std::vector<std::string> possibleChromes({"google-chrome", "google-chrome-stable", "chrome", "chromium", "chromium-browser"});
     auto result = std::find_if(possibleChromes.begin(), possibleChromes.end(), [](const std::string& chrome) -> bool {return checkLinuxCommandExists(chrome);});
     if (result != possibleChromes.end()) {
         _chromePath = *result;
     }
 #else
-    // Todo: implement windows lookup here
+	_chromePath = "chrome.exe";
 #endif
 }
 
 void ChromeRunner::openPage(const std::string page, bool pureAddress) {
-    std::string path = _chromePath + " " + (pureAddress ? page : (_serverAddress + page));
-    std::cout<<"Launching "<<path<<std::endl;
-    std::system(path.c_str());
+#ifdef __linux__	
+	const std::string path = _chromePath + " " + (pureAddress ? page : (_serverAddress + page));
+	std::cout << "Launching " << path << std::endl;
+	std::system(path.c_str());
+#else 
+	const std::string path = pureAddress ? page : (_serverAddress + page);
+	std::cout << "Launching " << path << std::endl;
+	std::cout<<ShellExecute(NULL, "open", _chromePath.c_str(), path.c_str(), NULL, 1)<<std::endl;
+#endif
 }
