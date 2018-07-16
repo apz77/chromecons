@@ -3,6 +3,24 @@ configure_file(
     "${PROJECT_BINARY_DIR}/include/config.h"
 )
 
+if(MSVC)
+  set(BUILD_SHARED_LIBS false)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi /MT")
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /Zi /MT") 
+  add_definitions(-D_WIN32_WINNT=0x0501)
+  # Force static runtime libraries
+  FOREACH(flag
+   CMAKE_C_FLAGS_RELEASE CMAKE_C_FLAGS_RELWITHDEBINFO
+   CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_DEBUG_INIT
+   CMAKE_CXX_FLAGS_RELEASE  CMAKE_CXX_FLAGS_RELWITHDEBINFO
+   CMAKE_CXX_FLAGS_DEBUG  CMAKE_CXX_FLAGS_DEBUG_INIT)
+   STRING(REPLACE "/MD"  "/MT" "${flag}" "${${flag}}")
+   SET("${flag}" "${${flag}} /EHsc")
+  ENDFOREACH()
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
+endif()
+
 set(BOOST_DIR vendors/boost)
 
 add_executable(chromecons src/main.cpp)
@@ -39,9 +57,3 @@ else()
 endif()
 
 target_sources(chromecons PUBLIC ${SOURCE_FILES})
-
-if(MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi")
-else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
-endif()

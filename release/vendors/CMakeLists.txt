@@ -12,6 +12,10 @@ if (WIN32)
                   WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/boost"
                   RESULT_VARIABLE boostrap_result)
 
+    execute_process(COMMAND "b2.exe b2.exe variant=release threading=multi runtime-link=static link=static stage"
+       	          WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/boost"
+               	  RESULT_VARIABLE boostrap_result)
+
     if (bootstrap_result) 
 	message(FATAL_ERROR "boost: Boost bootstrap failed")
     endif()
