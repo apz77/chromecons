@@ -3,6 +3,12 @@ configure_file(
     "${PROJECT_BINARY_DIR}/include/config.h"
 )
 
+if (STAGE)
+    add_definitions(-DDEV=true)
+endif()
+
+set(BOOST_DIR libs/boost)
+
 if(MSVC)
   set(BUILD_SHARED_LIBS false)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi /MT")
@@ -21,13 +27,11 @@ else()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
 endif()
 
-set(BOOST_DIR vendors/boost)
-
 add_executable(chromecons src/main.cpp)
 
 include_directories(${PROJECT_BINARY_DIR}/include)
 include_directories(include)
-include_directories(${BOOST_DIR})
+include_directories(${BOOST_DIR}/include)
 include_directories(vendors/sqlite)
 include_directories(vendors/http-parser)
 
@@ -37,13 +41,14 @@ file(GLOB_RECURSE SOURCE_FILES "src/*.cpp" "src/*.c" "include/*.h")
 
 if (WIN32)
     file(GLOB BOOST_LIBS "${BOOST_DIR}/stage/lib/*.lib")
+    link_directories(${BOOST_DIR}/stage/lib)    
 else()
     file(GLOB BOOST_LIBS "${BOOST_DIR}/lib/*.a")
+    link_directories(${BOOST_DIR}/lib)
 endif()
 
 message("${BOOST_LIBS}")
 
-link_directories(${BOOST_DIR}/stage/lib)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
