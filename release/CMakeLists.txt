@@ -58,7 +58,7 @@ set_target_properties(http-parser PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m
 target_link_libraries(chromecons sqlite3 http-parser ${BOOST_LIBS})
 
 if (UNIX)
-    target_link_libraries(chromecons pthread dl)
+    target_link_libraries(chromecons pthread dl -static-libgcc -static-libstdc++)
 else()
     target_link_libraries(chromecons Shell32.lib)
 endif()
