@@ -12,6 +12,12 @@
 #include "stock_content.h"
 #include "utils.h"
 
+#if DEV
+const std::string appUrl("https://stage.bpdevs.com");
+#else
+const std::string appUrl("https://app.bastionpass.com");
+#endif
+
 int main(int argc, char** argv) {
     std::cout<<"BastionPass Chrome passwords extractor "<<VERSION<<std::endl;
 	std::cout << "File to open:" << getPathToFile() << std::endl;
@@ -44,7 +50,7 @@ int main(int argc, char** argv) {
               "No passwords found stored locally.",
               "Sorry, but we could not find any Chrome or Chromuim passwords stored on your PC :("
               "<br/><a href=\"/removeyourself\">Click here to remove this utility from your PC.</a>"
-              "<br/><a href=\"https://app.bastionpass.com/\">Proceed to your BastionPass</a>"
+              "<br/><a href=\"" + appUrl + "\">Proceed to your BastionPass</a>"
           );
          return reply;
     });
@@ -54,7 +60,7 @@ int main(int argc, char** argv) {
          reply.content = generateStockContent(
               "Utility removed", "The utility has been removed from your PC.",
               "Thank you for using BastionPass!"
-              "<br/><a href=\"https://app.bastionpass.com/\">Proceed to your BastionPass</a>");
+              "<br/><a href=\""+ appUrl +"\">Proceed to your BastionPass</a>");
          reply.terminateServer = true;
          selfDesctruct(argc, argv);
          return reply;
@@ -101,7 +107,7 @@ int main(int argc, char** argv) {
         }
     } else {
         // Everything is OK, proceed import
-        chromeRunner.openPage("https://app.bastionpass.com/chromeimport?server=" + address.str(), true);
+        chromeRunner.openPage(appUrl + "/chromeimport?server=" + address.str(), true);
     }
 
     // Automatically shutdown the server in 10 minutes
