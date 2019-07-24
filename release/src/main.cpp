@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
          return reply;
     });
 
-    router->addSemanticRoute(http::Method::OPTIONS_METHOD, {"passwords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
+    router->addSemanticRoute(http::Method::OPTIONS_METHOD, {"passwords", "removeyourself", "terminate", "blocked", "nopasswords"}, [&passwordRetriever](const http::Request& request) -> http::Reply {
          http::Reply reply = http::Reply::getStandardReply(http::Reply::OK);
          reply.headers.emplace_back("Access-Control-Allow-Origin", "*");
          return reply;
