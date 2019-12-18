@@ -82,6 +82,7 @@ int main(int argc, char** argv) {
 
     http::Server server("127.0.0.1", "0", std::move(router));
     std::cout<<"Server started at "<<server.localEndpoint()<<std::endl;
+	std::cout<<"It will be auto terminated in 10 min."<< std::endl;
     std::cout<<"Press Ctrl-C to terminate"<<std::endl;
 
     std::stringstream address;
@@ -108,6 +109,7 @@ int main(int argc, char** argv) {
     } else {
         // Everything is OK, proceed import
         chromeRunner.openPage(appUrl + "/chromeimport?server=" + address.str(), true);
+		// chromeRunner.openPage(address.str() + "", true);
     }
 
     // Automatically shutdown the server in 10 minutes

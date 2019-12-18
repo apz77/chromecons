@@ -23,7 +23,6 @@ void Connection::start() {
                     auto b = reply.getBuffers();
                     std::vector<char> data(boost::asio::buffer_size(b));
                     boost::asio::buffer_copy(boost::asio::buffer(data), b);
-                    std::cout<<std::string(data.data(), data.size())<<std::endl<<std::endl;
                     writeReply(reply);
                 }
             } else {
